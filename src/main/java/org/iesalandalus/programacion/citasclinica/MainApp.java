@@ -18,7 +18,7 @@ public class MainApp {
 
 	// 1.- DECLARAMOS LOS ATRIBUTOS
 	
-	public static final int NUM_MAX_CITAS = 10;
+	public static final int NUM_MAX_CITAS = 30;
 	private static Citas listaCitas = new Citas(NUM_MAX_CITAS);
 
 	/* PREVIAMENTE MOSTRAREMOS CON SYSTEM.OUT.PRINTLN UNA BIENVENIDA
@@ -89,23 +89,24 @@ public class MainApp {
 	// 4.- CREAMOS EL METODO BUSCARCITA
 
 	private static void buscarCita() throws OperationNotSupportedException {
+
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		LocalDateTime fecha = Consola.leerFechaHora();
-		Paciente paciente = new Paciente("prueba", "77777777J", "777777777");
+
+		Paciente paciente = new Paciente("pacienteX", "77160362P", "612345678");
 		Cita cita = new Cita(paciente, fecha);
-		Cita citaBuscada;
-		citaBuscada = listaCitas.buscar(cita);
-		if (citaBuscada == null) {
-			System.out.println("");
+
+		Cita citaComprobada;
+		citaComprobada = listaCitas.buscar(cita);
+
+		if (citaComprobada == null) {
 			System.out.println("No existen citas para la fecha: " + fecha.format(formato));
-			System.out.println("");
 		} else {
+
 			Cita[] citas = listaCitas.getCitas(fecha.toLocalDate());
-			for (Cita citaEncontrada : citas) {
-				if (cita.equals(citaEncontrada)) {
-					System.out.println("");
-					System.out.println("La cita es " + citaEncontrada);
-					System.out.println("");
+			for (Cita citaPasada : citas) {
+				if (cita.equals(citaPasada)) {
+					System.out.println("La cita es " + citaPasada);
 				}
 			}
 
@@ -118,24 +119,20 @@ public class MainApp {
 	// 5.- CREAMOS EL METODO BORRARCITA
 	
 	private static void borrarCita() throws OperationNotSupportedException {
+
 		LocalDateTime fechaHora = Consola.leerFechaHora();
-		Paciente paciente = new Paciente("prueba", "77777777J", "777777777");
+		Paciente paciente = new Paciente("paciente paciente", "77160362P", "612345678");
 		Cita cita = new Cita(paciente, fechaHora);
+
 		try {
 			listaCitas.borrar(cita);
-			System.out.println("");
-			System.out.println("Cita borrada.");
-			System.out.println("");
+			System.out.println("Cita borrada correctamente.");
 			Consola.mostrarMenu();
 			ejecutarOpcion(Consola.elegirOpcion());
-		} catch (OperationNotSupportedException e) {
-			System.out.println("");
-			System.out.println(e.getMessage());
-			System.out.println("");
-			Consola.mostrarMenu();
+		} catch (Exception ex) {
+			System.out.println("Se ha producido el siguiente error: " + ex.getMessage());
 			ejecutarOpcion(Consola.elegirOpcion());
 		}
-
 	}
 	
 	// 6.- CREAMOS EL METODO MOSTRARCITASDIA
