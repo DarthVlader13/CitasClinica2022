@@ -10,6 +10,8 @@ import static org.junit.Assert.fail;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.iesalandalus.programacion.modelos.Cita;
+import org.iesalandalus.programacion.modelos.Paciente;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

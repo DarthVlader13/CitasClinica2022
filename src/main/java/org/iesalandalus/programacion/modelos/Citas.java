@@ -8,7 +8,7 @@ public class Citas {
 
 	// 1.- DECLARAMOS LOS ATRIBUTOS
 
-	private int capacidad, tamano;
+	private int capacidad,tamano;
 
 	Cita[] coleccionCitas;
 

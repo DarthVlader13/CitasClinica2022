@@ -106,46 +106,25 @@ public class Paciente {
 	
 	// 3.- CREAMOS EL METODO COMPROBARLETRADNI
 	private boolean comprobarLetraDni(String dni) {
-		return dniValido(dni);
+		boolean verificador = false;
+
+		Pattern patron;
+		Matcher comparador;
+
+		patron = Pattern.compile(ERROR_DNI);
+		comparador = patron.matcher(dni);
+
+		if (comparador.matches()) {
+			int numeroDni = Integer.parseInt(comparador.group(1));
+			String letraDni = comparador.group(2);
+			String[] letraValida = { "T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S",
+					"Q", "V", "H", "L", "C", "K", "E" };
+			if (comparador.group(2).equals(letraValida[numeroDni % 23])) {
+				verificador = true;
+			}
+		}
+		return verificador;
 	}
-	
-	public static boolean dniValido(String dni) {
-
-		if (dni == null || dni.trim().isEmpty())
-			throw new NullPointerException("ERROR: El dni no puede ser nulo ni estar vacío.");
-
-		int numerosDni;
-		char letra;
-
-		char[] asignarLetra = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q',
-				'V', 'H', 'L', 'C', 'K', 'E' };
-
-		Pattern p = Pattern.compile(ERROR_DNI);
-		Matcher m = p.matcher(dni);
-
-		boolean dniFormado = false;
-
-		if (!m.matches()) {
-			return false;
-		}
-
-		try {
-			numerosDni = Integer.parseInt(m.group(1));
-		} catch (NumberFormatException e) {
-			numerosDni = 0;
-		}
-
-		letra = asignarLetra[numerosDni % 23];
-
-		if (m.group(2).charAt(0) == letra) {
-			dniFormado = true;
-
-		} else {
-			throw new IllegalArgumentException("ERROR: La letra del DNI no es correcta.");
-		}
-		return dniFormado;
-	}	
-		
 	
 	
 	// CREAMOS EL METODO GET Y SET PARA TELEFONO
